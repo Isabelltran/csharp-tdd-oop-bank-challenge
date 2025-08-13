@@ -9,6 +9,7 @@ namespace Boolean.CSharp.Main.Concrete.Accounts
 {
     public class CurrentAccount : BankAccount
     {
-        
+       
+
     }
 }

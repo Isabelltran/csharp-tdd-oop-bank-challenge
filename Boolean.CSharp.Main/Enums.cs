@@ -8,5 +8,15 @@ namespace Boolean.CSharp.Main
 {
     public enum Branch
     {
+        Oslo,
+        Buskerud,
+        Vestfold
     }
+
+    public enum Type
+    {
+        Debit,
+        Credit
+    }
+
 }
