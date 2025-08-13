@@ -10,7 +10,7 @@ namespace Boolean.CSharp.Main.Abstract
     public abstract class BankAccount
     {
         private decimal _balance = 0;
-        private Branch _branch;
+        private Branch _branch = Branch.Oslo;
         private List<Payment> _payments = new List<Payment>();
 
         public List<Payment> GetPaymentsHistory() => _payments; // Maybe remove later
@@ -26,29 +26,34 @@ namespace Boolean.CSharp.Main.Abstract
             _balance += amount;
         }
 
-        public void MakeWithdraw(decimal amount)
+        public virtual bool MakeWithdraw(decimal amount)
         {
-            _balance -= amount;
+            if (amount <= Balance)
+            {
+                _balance -= amount;
+                return true;
+            }
+            return false;
         }
 
         public string SeeTransactions()
         {
 
             StringBuilder sb = new StringBuilder();
-            sb.Append($"{"Date",-15}     || {"Credit",-15} || {"Debit",-15} || {"Balance",-15}");
+            sb.Append($"{"Date",-15} || {"Credit",-15} || {"Debit",-15} || {"Balance",-15}");
 
             foreach (Payment p in _payments)
             {
                 if (p.PaymentType == Type.Credit)
                 {
                     MakeDeposit(p.Amount);
-                    sb.Append($"\n{p.Date,-15} || {p.Amount,-15} || {"",-15} || {Balance,-15}");
+                    sb.Append($"\n{p.Date.ToString("dd/mm/yyyy"),-15} || {p.Amount,-15} || {"",-15} || {Balance,-15}");
 
                 }
                 if (p.PaymentType == Type.Debit)
                 {
                     MakeWithdraw(p.Amount);
-                    sb.Append($"\n{p.Date,-15} || {"",-15} || {p.Amount,-15} || {Balance,-15}");
+                    sb.Append($"\n{p.Date.ToString("dd/mm/yyyy"),-15} || {"",-15} || {p.Amount,-15} || {Balance,-15}");
                 }
             }
 
@@ -70,7 +75,6 @@ namespace Boolean.CSharp.Main.Abstract
                 }
             }
             return balance;
-            
         }
 
 
@@ -83,6 +87,6 @@ namespace Boolean.CSharp.Main.Abstract
         public string CustomerName { get; set; }
         public string BankAccountName { get; set; }
 
-        public decimal Balance { get { return _balance; }  } 
+        public decimal Balance { get { return _balance; } set {_balance = value;} } 
     }
 }

@@ -19,4 +19,11 @@ namespace Boolean.CSharp.Main
         Credit
     }
 
+    public enum SendingType
+    {
+        Accept,
+        Reject,
+        Pending
+
+    }
 }

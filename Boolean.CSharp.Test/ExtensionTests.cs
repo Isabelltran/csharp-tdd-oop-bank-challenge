@@ -39,10 +39,27 @@ namespace Boolean.CSharp.Test
             CurrentAccount account = new CurrentAccount();
             SavingsAccount savingsAccount = new SavingsAccount();   
 
-            account.Branch = Branch.Oslo;
+            account.Branch = Branch.Buskerud;
             savingsAccount.Branch = Branch.Oslo;
 
-            Assert.That(account.Branch, Is.EqualTo(Branch.Oslo));
+            Assert.That(account.Branch, Is.EqualTo(Branch.Buskerud));
+            Assert.That(savingsAccount.Branch, Is.EqualTo(Branch.Oslo));
+
+        }
+
+        [Test]
+
+        public void TestRequestOverdraft()
+        {
+            CurrentAccount current = new CurrentAccount();
+
+            current.MakeDeposit(500);
+            current.MakeWithdraw(1000);
+
+            Overdraft result = current.RequestOverdraft(1000);
+
+            Assert.That(result.Type, Is.EqualTo(SendingType.Accept));
+            Assert.That(current.Balance, Is.EqualTo(500));
 
         }
         
